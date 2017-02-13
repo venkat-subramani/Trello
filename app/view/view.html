@@ -1,0 +1,181 @@
+<!-- Body View part -->
+<div class="container-fluid">
+	<!-- Header Bar -->
+	<div class="row menu-bar">
+		<div class="col-lg-2 col-md-2 col-sm-2 col-lg-push-5 col-md-push-5 col-sm-push-5" id="trello">
+			<img src="{{data.header.trello}}" height="35px"; />
+		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-lg-pull-2 col-md-pull-2 col-sm-pull-2" id="boards"><b>{{data.header.boards}}</b></div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-lg-pull-2 col-md-pull-2 col-sm-pull-2" id="search">
+			<div class="input-group">
+      		<input type="text" class="form-control">
+      		<span class="input-group-btn">
+        	<button class="btn btn-default">
+        		<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        	</button>
+      		</span>
+    		</div>
+  		</div>
+  		
+  		<div class="row" id="headerRight">
+	  		<div id="headGlyph" type="button" class="glyphicon glyphicon-plus"></div>
+	  		<div id="name">
+	  			{{data.header.userName}}
+	  			<img src="{{data.header.userPic}}" id="idImage" />
+	  		</div>
+	  		<div id="headGlyph" type="button" class="glyphicon glyphicon-bell"></div>
+	  	</div>
+  
+	</div>
+	<!-- Content Surface -->
+	<div class="row" id="content">
+		<!-- Boards Panel Surface -->
+		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+			<div id="content-header" class="row">
+				<div  id="text1" class="col-lg-4 col-md-4 col-sm-5 col-xs-8">{{data.header.contentTitle}}</div>
+				<div id="content-sym" class="glyphicon glyphicon-star-empty"></div>
+				<div id="content-sym" class="glyphicon glyphicon-globe">{{data.header.public}}</div>
+			</div>
+			<div class="row" id="columns">
+				<!-- Boards panel -->
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="panel" ng-repeat="listName in data.board">
+					<div class="panel panel-default">
+					    <div class="panel-heading colBody u-fancy-scrollbar" id="headingPanel" ><span>{{listName.title}}</span><span class="glyphicon glyphicon-record symbol"></span></div>
+					    <div id="col1" class="panel-body" as-sortable="DragAndDropOptions" ng-model="listName.panel" ng-touchstart="getPanelIndex($event)">
+  							<div class="panel panel-default" ng-repeat="item in listName.panel" as-sortable-item ng-touchstart="getCardIndex($event,$index,$parent.$index)">
+  								<!-- Card inside the Board -->
+   								<div class="panel-body drag" as-sortable-item-handle >
+	   								<div class="row colors">
+			  							<div id="colour1" style="background-color: {{item.card.labelColor1}}"></div>
+			  							<div id="colour2" style="background-color: {{item.card.labelColor2}}"></div>
+			  							<div id="colour3" style="background-color: {{item.card.labelColor3}}"></div>
+			  							<div id="colour4" style="background-color: {{item.card.labelColor4}}"></div>
+			  							<div id="colour5" style="background-color: {{item.card.labelColor5}}"></div>
+	  								</div>
+	  								<div ng-if="item.card.pic == '' ">
+										<img ng-src="{{item.card.pic}}" id="cardPic" class="noDisplay">
+									</div>
+									<div ng-if="item.card.pic != '' ">
+										<img ng-src="{{item.card.pic}}" id="cardPic">
+									</div> 
+								 	<p id="cardText">{{item.card.text}}</p>
+								 	<span ng-if="item.card.glyphalignLeft == '' ">
+										<span class="noDisplay"></span>
+									</span>
+									<span ng-if="item.card.glyphalignLeft != '' ">
+										<span class="{{item.card.glyphalignLeft}}"></span>&nbsp;
+									</span>
+									<span ng-if="item.card.glyphalike == '' ">
+										<span class="noDisplay"></span>
+									</span>
+									<span ng-if="item.card.glyphlike != '' ">
+										&nbsp;<span class="{{item.card.glyphlike}}"></span>&nbsp;{{item.card.vote}}
+									</span>
+									<span ng-if="item.card.glyphpaperclip == '' ">
+										<span class="noDisplay"></span>
+									</span>
+									<span ng-if="item.card.glyphpaperclip != '' ">
+										&nbsp;<span class="{{item.card.glyphpaperclip}}"></span>&nbsp;{{item.card.attachments}}
+									</span>
+									<span ng-if="item.card.glyphcomment == '' ">
+										<span class="noDisplay"></span>
+									</span>
+									<span ng-if="item.card.glyphcomment != '' ">
+										&nbsp;<span class="{{item.card.glyphcomment}}"></span>&nbsp;{{item.card.comments}}
+									</span>
+									<span ng-if="item.card.glyphlist == '' ">
+										<span class="noDisplay"></span>
+									</span>
+									<span ng-if="item.card.glyphlist != '' ">
+										&nbsp;<span class="{{item.card.glyphlist}}"></span>&nbsp;{{item.card.list}}&nbsp;
+									</span>
+									<span ng-if="item.card.glyphdateId == '' ">
+										<span id="{{item.card.dateId}}" class="noDisplay">
+					    					<span class="{{item.card.glyphtime}}"></span>{{item.card.date}}
+					    				</span>
+									</span>
+									<span ng-if="item.card.glyphdateId != '' ">
+										<span id="{{item.card.dateId}}">
+					    					&nbsp;<span class="{{item.card.glyphtime}}"></span>&nbsp;{{item.card.date}}
+					    				</span>
+									</span>
+									<div ng-if="item.card.userPic1 == '' ">
+										<img ng-src="{{item.card.userPic1}}" id="card" class="noDisplay">
+									</div>
+									<div ng-if="item.card.userPic1 != '' ">
+										<img ng-src="{{item.card.userPic1}}" id="card" class="img-rounded">
+									</div> 
+									<div ng-if="item.card.userPic2 == '' ">
+										<img ng-src="{{item.card.userPic2}}" id="card" class="noDisplay">
+									</div>
+									<div ng-if="item.card.userPic2 != '' ">
+										<img ng-src="{{item.card.userPic2}}" id="card" class="img-rounded">
+									</div> 
+  								</div>
+  							</div>
+  							
+  						</div>
+					    <div class="btn" data-toggle="modal" data-target="#myModal" ng-click=addCard($index)><a>{{data.titles.addCard}}</a></div>
+					    		 <div class="modal fade" id="myModal" role="dialog">
+  								  <div class="modal-dialog ">
+    
+                                     <!-- Modal content-->
+                                     <div class="modal-content">
+                                       <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">Add a card..</h4>
+                                       </div>
+                                       <div class="modal-body">
+                                         Text:<p><input type="text" id="textArea" ng-model=newCardName></p>
+                                         Image URL:<p><input typr="text" id="imageUrl" ng-model=imageDisplay>
+                                     
+                                       </div>
+                                       <div class="modal-footer">
+                                       	 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click=save(newCardName,imageDisplay) id="saveButton"><b>Save</b></button>
+                                         <button type="button" class="btn btn-default" data-dismiss="modal" id="closeButton"><b>Close</b></button>
+                                       </div>
+                                     </div>
+                                     
+                                   </div>
+  							</div>
+  					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- Collapsible Side Menubar -->
+		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" id="panel5">
+			<button id="showMenu" class="btn btn-default" data-toggle="collapse" data-target="#sideMenu"> Menu<span class="glyphicon glyphicon-chevron-down"></span> </button>
+			<div class="panel panel-default collapse" id="sideMenu"> 
+				<div class="panel-heading">{{data.menu.title}}</div>
+				<div  id="aside" class="panel-body u-fancy-scrollbar">
+					<div class="panel panel-default">
+						  <div class="panel-heading">{{data.menu.members.title}}</div>
+						  <div class="panel-body" id="info">
+						  	<img src="{{data.menu.members.member1}}" class="img-rounded"/>
+						  	<img src="{{data.menu.members.member2}}" class="img-rounded"/>
+						  	<img src="{{data.menu.members.member3}}" class="img-rounded"/>
+						  	<img src="{{data.menu.members.member4}}" class="img-rounded"/>
+						  	<img src="{{data.menu.members.member5}}" class="img-rounded"/>
+						  	<div id="addMembers">
+						  		<button class="btn btn-default"><span class="glyphicon glyphicon-user"></span><b>{{data.menu.members.addMembers}}</b></button>
+						  	</div>
+						  </div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">{{data.menu.activitytitle}}</div>
+						<div class="panel-body" id="panel-info">
+							<div class="panel panel-default" ng-repeat="activity in data.menu.activity">
+	 							 <div class="panel-body"  id="info">
+	 							 	<img src="{{activity.UserPic}}" class="img-rounded" />
+								 	<p id="cardText">{{activity.text}}</p>
+								 </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+  			</div>
+		</div>
+	</div>
+</div>
